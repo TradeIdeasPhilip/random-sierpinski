@@ -1,0 +1,16 @@
+circle.outside {
+  r: 5;
+  fill: aqua;
+}
+circle.internal {
+  r: 1;
+  animation: fade 40s linear forwards;
+}
+@keyframes fade {
+  0% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 0%;
+  }
+}
