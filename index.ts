@@ -51,13 +51,13 @@ function animateOnce() {
     circles.splice(0, toDelete).forEach(oldCircle => oldCircle.remove());
   }
 
-  let path = "M";
-  for (let i = Math.max(0, circles.length - 10); i < circles.length; i++) {
-    const circle = circles[i];
-    path += " " + circle.cx.baseVal.value + "," + circle.cy.baseVal.value;
-  }
-  recentPath.setAttribute("d", path);
-  recentPath.setAttribute("stroke", "hsl(" + currentHue + ", 100%, 33%)");
+  // let path = "M";
+  // for (let i = Math.max(0, circles.length - 10); i < circles.length; i++) {
+  //   const circle = circles[i];
+  //   path += " " + circle.cx.baseVal.value + "," + circle.cy.baseVal.value;
+  // }
+  // recentPath.setAttribute("d", path);
+  // recentPath.setAttribute("stroke", "hsl(" + currentHue + ", 100%, 33%)");
 }
 
 //(window as any).animateOnce = animateOnce;

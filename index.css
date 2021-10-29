@@ -4,7 +4,7 @@ circle.outside {
 }
 circle.internal {
   r: 1;
-  animation: fade 30s linear forwards;
+  /*animation: fade 30s linear forwards;*/
 }
 @keyframes fade {
   0% {
