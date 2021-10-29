@@ -4,13 +4,20 @@ circle.outside {
 }
 circle.internal {
   r: 1;
-  animation: fade 40s linear forwards;
+  animation: fade 30s linear forwards;
 }
 @keyframes fade {
   0% {
-    opacity: 100%;
+    /*opacity: 100%;*/
+    r: 1;
   }
   100% {
-    opacity: 0%;
+    /*opacity: 0%;*/
+    r: 0.1;
   }
+}
+#recent {
+  z-index: 3;
+  fill: none;
+  stroke-width: 0.5;
 }

@@ -1,6 +1,7 @@
-export {};
+import { getById } from "./lib/client-misc.js";
+import { pick } from "./lib/misc.js";
 
-console.log("Hello world.");
+export {};
 
 const svg = document.querySelector("svg")!;
 
@@ -9,10 +10,6 @@ const outside = [
   { x: 0, y: 100 },
   { x: 100, y: 100 },
 ];
-
-function pick<T>(array: T[]): T {
-  return array[(Math.random() * 3) | 0];
-}
 
 outside.forEach((center) => {
   const circle = document.createElementNS(
@@ -29,7 +26,9 @@ let last = pick(outside);
 
 const circles : SVGCircleElement[] = [];
 
-let nextHue = 0;
+let currentHue = 0;
+
+const recentPath = getById("recent", SVGPathElement);
 
 function animateOnce() {
   const moveToward = pick(outside);
@@ -40,8 +39,8 @@ function animateOnce() {
   const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
   circle.setAttribute("cx", next.x.toString());
   circle.setAttribute("cy", next.y.toString());
-  circle.setAttribute("fill", "hsl(" + nextHue + ", 100%, 50%)");
-  nextHue++;
+  currentHue++;
+  circle.setAttribute("fill", "hsl(" + currentHue + ", 100%, 50%)");
   circle.classList.add("internal");
   svg.appendChild(circle);
   last = next;
@@ -51,6 +50,14 @@ function animateOnce() {
   if (toDelete > 0) {
     circles.splice(0, toDelete).forEach(oldCircle => oldCircle.remove());
   }
+
+  let path = "M";
+  for (let i = Math.max(0, circles.length - 10); i < circles.length; i++) {
+    const circle = circles[i];
+    path += " " + circle.cx.baseVal.value + "," + circle.cy.baseVal.value;
+  }
+  recentPath.setAttribute("d", path);
+  recentPath.setAttribute("stroke", "hsl(" + currentHue + ", 100%, 33%)");
 }
 
 //(window as any).animateOnce = animateOnce;
