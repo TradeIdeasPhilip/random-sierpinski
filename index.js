@@ -1,6 +1,13 @@
+// I don't remember where I first heard about this.
+// But this video does a great job explaining what I'm doing.
+// https://youtu.be/5nuYD2M2AX8
 import { getById } from "./lib/client-misc.js";
 import { pick } from "./lib/misc.js";
+import { makeDraggable } from "./lib/svg-drag.js";
 const svg = document.querySelector("svg");
+const svgTopGroup = getById("top", SVGGElement);
+const svgBottomGroup = getById("bottom", SVGGElement);
+makeDraggable(svg);
 const outside = [
     { x: 50, y: 0 },
     { x: 0, y: 100 },
@@ -11,12 +18,12 @@ outside.forEach((center) => {
     circle.setAttribute("cx", center.x.toString());
     circle.setAttribute("cy", center.y.toString());
     circle.classList.add("outside");
-    svg.appendChild(circle);
+    circle.classList.add("draggable");
+    svgTopGroup.appendChild(circle);
 });
 let last = pick(outside);
 const circles = [];
 let currentHue = 0;
-const recentPath = getById("recent", SVGPathElement);
 function animateOnce() {
     const moveToward = pick(outside);
     const next = {
@@ -29,20 +36,13 @@ function animateOnce() {
     currentHue++;
     circle.setAttribute("fill", "hsl(" + currentHue + ", 100%, 50%)");
     circle.classList.add("internal");
-    svg.appendChild(circle);
+    svgBottomGroup.appendChild(circle);
     last = next;
     circles.push(circle);
     const toDelete = circles.length - 1000;
     if (toDelete > 0) {
         circles.splice(0, toDelete).forEach(oldCircle => oldCircle.remove());
     }
-    // let path = "M";
-    // for (let i = Math.max(0, circles.length - 10); i < circles.length; i++) {
-    //   const circle = circles[i];
-    //   path += " " + circle.cx.baseVal.value + "," + circle.cy.baseVal.value;
-    // }
-    // recentPath.setAttribute("d", path);
-    // recentPath.setAttribute("stroke", "hsl(" + currentHue + ", 100%, 33%)");
 }
 //(window as any).animateOnce = animateOnce;
 setInterval(animateOnce, 10);
