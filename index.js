@@ -22,9 +22,15 @@ class Corner {
         this.element = circle;
         Corner.all.set(circle, this);
     }
-    get x() { return this.initialPosition.x + this.translation.x; }
-    get y() { return this.initialPosition.y + this.translation.y; }
-    get position() { return { x: this.x, y: this.y }; }
+    get x() {
+        return this.initialPosition.x + this.translation.x;
+    }
+    get y() {
+        return this.initialPosition.y + this.translation.y;
+    }
+    get position() {
+        return { x: this.x, y: this.y };
+    }
     updateTranslation(x, y) {
         this.translation.x = x;
         this.translation.y = y;
@@ -53,7 +59,7 @@ const corners = [
     { x: 50, y: 0 },
     { x: 0, y: 100 },
     { x: 100, y: 100 },
-].map(center => new Corner(center));
+].map((center) => new Corner(center));
 let last = pick(corners).position;
 const circles = [];
 let currentHue = 0;
@@ -74,7 +80,7 @@ function animateOnce() {
     circles.push(circle);
     const toDelete = circles.length - 1000;
     if (toDelete > 0) {
-        circles.splice(0, toDelete).forEach(oldCircle => oldCircle.remove());
+        circles.splice(0, toDelete).forEach((oldCircle) => oldCircle.remove());
     }
 }
 //(window as any).animateOnce = animateOnce;

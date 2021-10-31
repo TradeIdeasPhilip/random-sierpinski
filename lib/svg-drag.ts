@@ -1,4 +1,4 @@
-// Source based one view-source://raw.githubusercontent.com/petercollingridge/code-for-blog/master/svg-interaction/draggable/draggable_restricted.svg
+// Source based on view-source://raw.githubusercontent.com/petercollingridge/code-for-blog/master/svg-interaction/draggable/draggable_restricted.svg
 // Main article: https://www.petercollingridge.co.uk/tutorials/svg/interactive/dragging/
 
 /**
@@ -8,7 +8,7 @@
  * @param target The item the user is dragging.
  * @returns The boundary the item should be confined to, or undefined to say there are no boundaries.
  */
-function getConfinement(target : SVGGElement) {
+function getConfinement(target: SVGGElement) {
   const confined = target.classList.contains("confine");
   if (confined) {
     return {
@@ -16,17 +16,16 @@ function getConfinement(target : SVGGElement) {
       x2: 30,
       y1: 2.2,
       y2: 19.2,
-    }
+    };
   } else {
     return undefined;
   }
 }
 
 export class MakeDraggable {
-
-  private selectedElement : SVGGraphicsElement | undefined;
-  private offset = { x : -1, y : -1};
-  private transform! : SVGTransform;
+  private selectedElement: SVGGraphicsElement | undefined;
+  private offset = { x: -1, y: -1 };
+  private transform!: SVGTransform;
   private bBox = new DOMRect();
   private minX = -1;
   private maxX = -1;
@@ -35,10 +34,12 @@ export class MakeDraggable {
   private confined = false;
 
   /**
-   * @returns The element that the user is currently dragging.  
+   * @returns The element that the user is currently dragging.
    * Undefined if no drag is in progress.
    */
-  public getSelectedElement() { return this.selectedElement; }
+  public getSelectedElement() {
+    return this.selectedElement;
+  }
 
   public constructor(public readonly svg: SVGSVGElement) {
     svg.addEventListener("mousedown", this.startDragEH.bind(this));
@@ -50,19 +51,18 @@ export class MakeDraggable {
     svg.addEventListener("touchend", this.endDragEH.bind(this));
     svg.addEventListener("touchleave", this.endDragEH.bind(this));
     svg.addEventListener("touchcancel", this.endDragEH.bind(this));
-  
   }
 
-  private getMousePosition(evt : MouseEvent | TouchEvent) {
+  private getMousePosition(evt: MouseEvent | TouchEvent) {
     const CTM = this.svg.getScreenCTM()!;
-    const locationHolder = ("touches" in evt)?evt.touches[0]:evt;
+    const locationHolder = "touches" in evt ? evt.touches[0] : evt;
     return {
       x: (locationHolder.clientX - CTM.e) / CTM.a,
       y: (locationHolder.clientY - CTM.f) / CTM.d,
     };
   }
-  
-  private startDragEH(evt : MouseEvent | TouchEvent) {
+
+  private startDragEH(evt: MouseEvent | TouchEvent) {
     const target = this.getDraggableTarget(evt);
     if (target) {
       this.selectedElement = target;
@@ -99,8 +99,8 @@ export class MakeDraggable {
       }
     }
   }
-  
-  private dragEH(evt : MouseEvent | TouchEvent) {
+
+  private dragEH(evt: MouseEvent | TouchEvent) {
     if (this.selectedElement) {
       evt.preventDefault();
 
@@ -130,14 +130,14 @@ export class MakeDraggable {
     }
   }
 
-  private endDragEH(evt : unknown) {
+  private endDragEH(evt: unknown) {
     if (this.selectedElement) {
       try {
         this.endDrag();
       } catch (ex) {
         console.error(ex);
       }
-      this.selectedElement = undefined;  
+      this.selectedElement = undefined;
     }
   }
 
@@ -146,9 +146,7 @@ export class MakeDraggable {
    * getSelectedElement() is still valid at this time.
    * The default does nothing.
    */
-  protected endDrag() {
-
-  }
+  protected endDrag() {}
 
   /**
    * This gets called while the user is dragging.
@@ -163,9 +161,7 @@ export class MakeDraggable {
    * viewBox coordinates.  0,0 is the original position of the object before
    * *any* dragging.
    */
-   protected drag(dx : number, dy : number) {
-
-  }
+  protected drag(dx: number, dy: number) {}
 
   /**
    * Checks if the target is draggable.  We set the event listener for the entire SVG
@@ -176,14 +172,15 @@ export class MakeDraggable {
    * @returns The item to be dragged, or undefined if user was not clicking on a
    * valid item.  this.getSelectedItem() will return this value.
    */
-  public getDraggableTarget(evt : MouseEvent | TouchEvent) {
+  public getDraggableTarget(evt: MouseEvent | TouchEvent) {
     const target = evt.target;
-    if ((target instanceof SVGGraphicsElement) && (target.classList.contains("draggable"))) {
+    if (
+      target instanceof SVGGraphicsElement &&
+      target.classList.contains("draggable")
+    ) {
       return target;
     } else {
       return undefined;
     }
   }
-
 }
-
