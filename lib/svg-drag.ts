@@ -89,14 +89,14 @@ export function makeDraggable(svg: SVGSVGElement) {
       offset = getMousePosition(evt);
 
       // Make sure the first transform on the element is a translate transform
-      var transforms = selectedElement.transform.baseVal;
+      const transforms = selectedElement.transform.baseVal;
 
       if (
         transforms.length === 0 ||
         transforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE
       ) {
         // Create an transform that translates by (0, 0)
-        var translate = svg.createSVGTransform();
+        const translate = svg.createSVGTransform();
         translate.setTranslate(0, 0);
         selectedElement.transform.baseVal.insertItemBefore(translate, 0);
       }
@@ -124,9 +124,9 @@ export function makeDraggable(svg: SVGSVGElement) {
     if (selectedElement) {
       evt.preventDefault();
 
-      var coord = getMousePosition(evt);
-      var dx = coord.x - offset.x;
-      var dy = coord.y - offset.y;
+      const coord = getMousePosition(evt);
+      let dx = coord.x - offset.x;
+      let dy = coord.y - offset.y;
 
       if (confined) {
         if (dx < minX) {
@@ -142,6 +142,7 @@ export function makeDraggable(svg: SVGSVGElement) {
       }
 
       transform.setTranslate(dx, dy);
+      //console.log({dx, dy, selectedElement, evt});
     }
   }
 
