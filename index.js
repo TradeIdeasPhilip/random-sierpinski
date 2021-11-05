@@ -52,6 +52,7 @@ class CornerDragger extends MakeDraggable {
     }
     endDrag() {
         this.current = undefined;
+        circles.forEach(circle => circle.classList.add("obsolete"));
     }
 }
 new CornerDragger(svg);

@@ -65,6 +65,7 @@ class CornerDragger extends MakeDraggable {
   }
   override endDrag() {
     this.current = undefined;
+    circles.forEach(circle => circle.classList.add("obsolete"));
   }
 }
 

@@ -18,3 +18,16 @@ circle.internal {
     r: 0.1;
   }
 }
+circle.obsolete {
+  /*animation: blur 3s linear forwards;*/
+  /*filter: url(#blurFilter);*/
+  r: 0.2;
+}
+@keyframes blur {
+  0% {
+    filter: blur(0)
+  }
+  100% {
+    filter: blur(10);
+  }
+}
