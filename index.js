@@ -1,6 +1,3 @@
-// I don't remember where I first heard about this.
-// But this video does a great job explaining what I'm doing.
-// https://youtu.be/5nuYD2M2AX8
 import { getById } from "./lib/client-misc.js";
 import { pick } from "./lib/misc.js";
 import { MakeDraggable } from "./lib/svg-drag.js";
@@ -84,5 +81,5 @@ function animateOnce() {
         circles.splice(0, toDelete).forEach((oldCircle) => oldCircle.remove());
     }
 }
-//(window as any).animateOnce = animateOnce;
 setInterval(animateOnce, 10);
+//# sourceMappingURL=index.js.map
